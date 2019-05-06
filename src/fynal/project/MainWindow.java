@@ -403,7 +403,7 @@ public class MainWindow extends javax.swing.JFrame {
         shot();
         diceWildcardGUI.setText("NOT");
         ComboPlayer1.addItem("Tank White");
-        //   poInitX+=diceMov;
+     //   poInitX+=diceMov;
     }//GEN-LAST:event_bttUPActionPerformed
 
     private void ComboPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboPlayer1ActionPerformed
