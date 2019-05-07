@@ -4,6 +4,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,8 +20,9 @@ public class MainWindow extends javax.swing.JFrame {
     private int diceMov;
     
     public MainWindow() {
+        pd = new PlayersDialog();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initComponents();
-        init();
     }
 
     /**
@@ -33,6 +35,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         PanelBattle = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         PanelButtons = new javax.swing.JPanel();
         bttUP = new javax.swing.JButton();
         BttLeft = new javax.swing.JButton();
@@ -77,15 +80,26 @@ public class MainWindow extends javax.swing.JFrame {
 
         PanelBattle.setBackground(new java.awt.Color(255, 255, 255));
 
+        jButton1.setText("Add Vehicles");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelBattleLayout = new javax.swing.GroupLayout(PanelBattle);
         PanelBattle.setLayout(PanelBattleLayout);
         PanelBattleLayout.setHorizontalGroup(
             PanelBattleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 997, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBattleLayout.createSequentialGroup()
+                .addGap(0, 918, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
         PanelBattleLayout.setVerticalGroup(
             PanelBattleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBattleLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1))
         );
 
         PanelButtons.setBackground(new java.awt.Color(255, 255, 255));
@@ -402,8 +416,10 @@ public class MainWindow extends javax.swing.JFrame {
         movements();
         shot();
         diceWildcardGUI.setText("NOT");
-        ComboPlayer1.addItem("Tank White");
-     //   poInitX+=diceMov;
+        poInitY-=diceMov;
+        ubication();
+        if(poInitY<0)
+            JOptionPane.showMessageDialog(null, "Excede la matriz vuelva a tirar");
     }//GEN-LAST:event_bttUPActionPerformed
 
     private void ComboPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboPlayer1ActionPerformed
@@ -484,6 +500,10 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        addVehicles();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void clear(){
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
@@ -536,13 +556,23 @@ public class MainWindow extends javax.swing.JFrame {
         poInitX=0;
         poInitY=3;
         matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
+    }
+    
+    private void ubication(){
+        String valor; 
+        valor = (String) ComboPlayer1.getSelectedItem();
+        System.out.println(poInitX+", "+poInitY);
+        System.out.println(valor);
+        if(valor.equals("War Plane"))
+            matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
+        else if(valor.equals("War Plane"))
+            matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/tank.jpg"));
         repaint();
     }
     
     private void movements() {
-        int diceMoves;
-        diceMoves = (int) (Math.random() * 6) + 1;
-        String textMovs = Integer.toString(diceMoves);
+        diceMov = (int) (Math.random() * 4);
+        String textMovs = Integer.toString(diceMov);
         diceMovementsGUI.setText(textMovs);
     }
   
@@ -552,16 +582,21 @@ public class MainWindow extends javax.swing.JFrame {
         String textShot = Integer.toString(diceShot);
         diceShotGUI.setText(textShot+"%");
     }
+    
+    public void addVehicles(){
+        ComboPlayer1.addItem(pd.vehicle1);
+        ComboPlayer1.addItem(pd.vehicle2);
+        ComboPlayer1.addItem(pd.vehicle3);
+        ComboPlayer2.addItem(pd.vehicle4);
+        ComboPlayer2.addItem(pd.vehicle5);
+        ComboPlayer2.addItem(pd.vehicle6);        
+        
+    }
 
-    private void init(){
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pd = new PlayersDialog(this, true);
-        this.setLocationRelativeTo(null);
-   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BttLeft;
-    public javax.swing.JComboBox ComboPlayer1;
+    public static javax.swing.JComboBox ComboPlayer1;
     public javax.swing.JComboBox ComboPlayer2;
     private javax.swing.JPanel PanelBattle;
     private javax.swing.JPanel PanelButtons;
@@ -571,6 +606,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel diceMovementsGUI;
     private javax.swing.JLabel diceShotGUI;
     private javax.swing.JLabel diceWildcardGUI;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -13,18 +13,23 @@ import org.jdesktop.observablecollections.ObservableCollections;
  * @author Usuario
  */
 public class PlayersDialog extends javax.swing.JDialog {
-
+    String vehicle1 =null;
+    String vehicle2=null;
+    String vehicle3=null;
+    String vehicle4=null;
+    String vehicle5=null;
+    String vehicle6=null;
     private List<Players> listaDatos;//lista que se envia como parametro
     private ObservableList<Players> listaObservableDatos;    //lista observable que busca la tabla
     private List<Players> lista = new ArrayList<>();//lista extra para guardar los valores
-    MainWindow vp = new MainWindow();
+//    MainWindow vp = new MainWindow();
     
     /**
      * Creates new form PlayersDialog
      */
-    public PlayersDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public PlayersDialog() {
         listaDatos = new ArrayList<>();
+        this.setLocationRelativeTo(null);
         listaObservableDatos = ObservableCollections.observableList(listaDatos);
         initComponents();
     }
@@ -257,58 +262,35 @@ public class PlayersDialog extends javax.swing.JDialog {
     }
     
     private void addVehicles(){
-        String vehicle1 =null;
-        String vehicle2=null;
-        String vehicle3=null;
-        String vehicle4=null;
-        String vehicle5=null;
-        String vehicle6=null;
         if(RBP1.isSelected())
-         vehicle1 = "You have a War Plane";
+         vehicle1 = "War Plane";
         else if(RBT1.isSelected())
-         vehicle1 = "You have a War Tank 1";
+         vehicle1 = "War Tank";
         
         if(RBP2.isSelected())
-         vehicle2 = "You have a War Plane 2";
+         vehicle2 = "War Plane";
         else if(RBT2.isSelected())
-         vehicle2 = "You have a War Tank 2";
+         vehicle2 = "War Tank";
         
         if(RBP3.isSelected())
-         vehicle3 = "You have a War Plane 3";
+         vehicle3 = "War Plane";
         else if(RBT3.isSelected())
-         vehicle3 = "You have a War Tank 3";
+         vehicle3 = "War Tank";
         
         if(RBP4.isSelected())
-         vehicle4 = "You have a War Plane 4";
+         vehicle4 = "War Plane";
         else if(RBT4.isSelected())
-         vehicle4 = "You have a War Tank 4";
+         vehicle4 = "War Tank";
         
         if(RBP5.isSelected())
-         vehicle5 = "You have a War Plane 5";
+         vehicle5 = "War Plane";
         else if(RBT5.isSelected())
-         vehicle5 = "You have a War Tank 5";
+         vehicle5 = "War Tank";
         
         if(RBP6.isSelected())
-         vehicle6 = "You have a War Plane 6";
+         vehicle6 = "War Plane";
         else if(RBT6.isSelected())
-         vehicle6 = "You have a War Tank 6";
-        addList(vehicle1,vehicle2,vehicle3,vehicle4,vehicle5,vehicle6);
-    }
-    
-    private void addList(String vehicle1,String vehicle2,String vehicle3,String vehicle4,String vehicle5,String vehicle6){
-        System.out.println(vehicle1);
-        vp.ComboPlayer1.addItem(vehicle1);
-        System.out.println(vehicle2);
-        vp.ComboPlayer1.addItem(vehicle2);
-        System.out.println(vehicle3);
-        vp.ComboPlayer1.addItem(vehicle3);
-        System.out.println(vehicle4);
-        vp.ComboPlayer1.addItem(vehicle4);
-        System.out.println(vehicle5);
-        vp.ComboPlayer1.addItem(vehicle5);
-        System.out.println(vehicle6);
-        vp.ComboPlayer1.addItem(vehicle6);
-        
+         vehicle6 = "War Tank";
     }
     
     private void RBP6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBP6ActionPerformed
