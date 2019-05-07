@@ -555,7 +555,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
         poInitX=0;
         poInitY=3;
-        matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/tank.jpg"));
+        matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
     }
     
     private void ubication(){
