@@ -555,7 +555,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
         poInitX=0;
         poInitY=3;
-        matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
+        matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/tank.jpg"));
     }
     
     private void ubication(){
@@ -565,7 +565,7 @@ public class MainWindow extends javax.swing.JFrame {
         System.out.println(valor);
         if(valor.equals("War Plane"))
             matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
-        else if(valor.equals("War Plane"))
+        else if(valor.equals("War Tank"))
             matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/tank.jpg"));
         repaint();
     }
