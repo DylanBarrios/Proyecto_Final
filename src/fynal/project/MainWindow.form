@@ -395,6 +395,9 @@
             </Property>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BttLeftActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bttRight">
           <Properties>
@@ -406,6 +409,9 @@
             </Property>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bttRightActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bttDown">
           <Properties>
@@ -417,6 +423,9 @@
             </Property>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bttDownActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="ComboPlayer2">
           <Properties>

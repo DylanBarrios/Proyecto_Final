@@ -56,6 +56,12 @@ public class PlayersDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        BTG1 = new javax.swing.ButtonGroup();
+        BTG2 = new javax.swing.ButtonGroup();
+        BTG3 = new javax.swing.ButtonGroup();
+        BTG4 = new javax.swing.ButtonGroup();
+        BTG5 = new javax.swing.ButtonGroup();
+        BTG6 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         LabelP1 = new javax.swing.JLabel();
         TextFieldP1 = new javax.swing.JTextField();
@@ -93,26 +99,37 @@ public class PlayersDialog extends javax.swing.JDialog {
 
         jLabel1.setText("After typing your name choose a vehicle");
 
+        BTG1.add(RBP1);
         RBP1.setText("War Plane");
 
+        BTG1.add(RBT1);
         RBT1.setText("War Tank");
 
+        BTG2.add(RBP2);
         RBP2.setText("War Plane");
 
+        BTG2.add(RBT2);
         RBT2.setText("War Tank");
 
+        BTG3.add(RBP3);
         RBP3.setText("War Plane");
 
+        BTG3.add(RBT3);
         RBT3.setText("War Tank");
 
+        BTG4.add(RBP4);
         RBP4.setText("War Plane");
 
+        BTG4.add(RBT4);
         RBT4.setText("War Tank");
 
+        BTG5.add(RBP5);
         RBP5.setText("War Plane");
 
+        BTG5.add(RBT5);
         RBT5.setText("War Tank");
 
+        BTG6.add(RBP6);
         RBP6.setText("War Plane");
         RBP6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +137,7 @@ public class PlayersDialog extends javax.swing.JDialog {
             }
         });
 
+        BTG6.add(RBT6);
         RBT6.setText("War Tank");
 
         jScrollPane1.setViewportView(jTable1);
@@ -298,6 +316,12 @@ public class PlayersDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_RBP6ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup BTG1;
+    private javax.swing.ButtonGroup BTG2;
+    private javax.swing.ButtonGroup BTG3;
+    private javax.swing.ButtonGroup BTG4;
+    private javax.swing.ButtonGroup BTG5;
+    private javax.swing.ButtonGroup BTG6;
     private javax.swing.JButton ButtonPlay;
     private javax.swing.JLabel LabelP1;
     private javax.swing.JLabel LabelP2;
