@@ -26,7 +26,14 @@ public class PlayersDialog extends javax.swing.JDialog {
     private List<Players> listaDatos;                           //lista que se envia como parametro
     private ObservableList<Players> listaObservableDatos;       //lista observable que busca la tabla
     private List<Players> lista = new ArrayList<>();            //lista extra para guardar los valores
-    
+    int ataqueT = 10;
+    int defensaT = 6;
+    int punteriaT = 60;
+    int HP = 50;
+    int PP = 5;
+    int nivel = 1;
+    int experiencia = 0;
+        
     String barra = File.separator;
     String ubicacion = System.getProperty("user.dir")+barra+"Registros"+barra;
     File contenedor = new File(ubicacion);
@@ -90,6 +97,9 @@ public class PlayersDialog extends javax.swing.JDialog {
         RBT5 = new javax.swing.JRadioButton();
         RBP6 = new javax.swing.JRadioButton();
         RBT6 = new javax.swing.JRadioButton();
+        jTextNick1 = new javax.swing.JTextField();
+        jTextNick2 = new javax.swing.JTextField();
+        jTextNick3 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -169,17 +179,25 @@ public class PlayersDialog extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RBP1)
-                            .addComponent(RBP2)
-                            .addComponent(RBP3))
-                        .addGap(37, 37, 37)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(RBT1)
-                            .addComponent(RBT2)
-                            .addComponent(RBT3))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(RBP1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(RBT1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(RBP2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(RBT2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(RBP3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(RBT3)))
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextNick1)
+                            .addComponent(jTextNick2)
+                            .addComponent(jTextNick3, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(RBP4)
@@ -216,15 +234,18 @@ public class PlayersDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(RBP1)
-                            .addComponent(RBT1))
+                            .addComponent(RBT1)
+                            .addComponent(jTextNick1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(RBT2)
                             .addComponent(RBP2)
-                            .addComponent(RBT2))
+                            .addComponent(jTextNick2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(8, 8, 8)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(RBT3)
-                            .addComponent(RBP3))
+                            .addComponent(RBP3)
+                            .addComponent(jTextNick3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -260,12 +281,10 @@ public class PlayersDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonPlayActionPerformed
-        addPlayers();
         addVehicles();
-        
+        addPlayers();
     }//GEN-LAST:event_ButtonPlayActionPerformed
 
-    
     private void addVehicles(){
         if(RBP1.isSelected())
          vehicle1 = "War Plane";
@@ -312,7 +331,14 @@ public class PlayersDialog extends javax.swing.JDialog {
                 else{
                     creaUbicacion.mkdirs();
                     Formatter crea = new Formatter(ubicacion+archivo);
-                    crea.format("%s\r\n", "Nombre="+TextFieldP1.getText());
+                    //nombre jugador, nombre vehiculo, Ataque, defensa, punteria, HP, pp, nivel, Experiencia, arma
+                    crea.format("%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n", 
+                            "Name="+TextFieldP1.getText(),"Vehicle1="+jTextNick1.getText(),
+                            "Vehicle2="+jTextNick2.getText(),"Vehicle3="+jTextNick3.getText(),
+                            "Ataque="+ataqueT,"Defensa="+defensaT,"Punteria="+punteriaT,"HP="+HP,
+                            "PP="+PP,"Nivel="+nivel,"Experiencia="+experiencia,"TipoVehiculo1="+vehicle1,
+                            "TipoVehiculo2="+vehicle2,"TipoVehiculo3="+vehicle3);
+                    
                     crea.close();
                     JOptionPane.showMessageDialog(rootPane, "Todo creado");
             //        jComboBox1.removeAllItems();
@@ -341,21 +367,24 @@ public class PlayersDialog extends javax.swing.JDialog {
     private javax.swing.JButton ButtonPlay;
     private javax.swing.JLabel LabelP1;
     private javax.swing.JLabel LabelP2;
-    private javax.swing.JRadioButton RBP1;
-    private javax.swing.JRadioButton RBP2;
-    private javax.swing.JRadioButton RBP3;
-    private javax.swing.JRadioButton RBP4;
-    private javax.swing.JRadioButton RBP5;
-    private javax.swing.JRadioButton RBP6;
-    private javax.swing.JRadioButton RBT1;
-    private javax.swing.JRadioButton RBT2;
-    private javax.swing.JRadioButton RBT3;
-    private javax.swing.JRadioButton RBT4;
-    private javax.swing.JRadioButton RBT5;
-    private javax.swing.JRadioButton RBT6;
+    public javax.swing.JRadioButton RBP1;
+    public javax.swing.JRadioButton RBP2;
+    public javax.swing.JRadioButton RBP3;
+    public javax.swing.JRadioButton RBP4;
+    public javax.swing.JRadioButton RBP5;
+    public javax.swing.JRadioButton RBP6;
+    public javax.swing.JRadioButton RBT1;
+    public javax.swing.JRadioButton RBT2;
+    public javax.swing.JRadioButton RBT3;
+    public javax.swing.JRadioButton RBT4;
+    public javax.swing.JRadioButton RBT5;
+    public javax.swing.JRadioButton RBT6;
     public javax.swing.JTextField TextFieldP1;
     public javax.swing.JTextField TextFieldP2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextNick1;
+    private javax.swing.JTextField jTextNick2;
+    private javax.swing.JTextField jTextNick3;
     // End of variables declaration//GEN-END:variables
 }

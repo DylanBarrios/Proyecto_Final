@@ -25,7 +25,6 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         pd = new PlayersDialog();
         rd = new ReportsDialog();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initComponents();
     }
 
@@ -671,13 +670,6 @@ public class MainWindow extends javax.swing.JFrame {
         ComboPlayer2.addItem(pd.vehicle4);
         ComboPlayer2.addItem(pd.vehicle5);
         ComboPlayer2.addItem(pd.vehicle6);        
-    }
-    
-    public void propiedadesTabla(){
-        rd.tableVehicles.setDefaultRenderer(Object.class, new ImgTable());
-        String titulos[] = {"Nombre","Estado","Enemigos destruidos","Veces que fue destruido"};
-        dtm = new DefaultTableModel(null,titulos);
-        rd.tableVehicles.setRowHeight(120);
     }
 
 

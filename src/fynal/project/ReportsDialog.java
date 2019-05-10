@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fynal.project;
 
 import java.io.File;
-import java.util.Formatter;
-import javax.swing.JOptionPane;
+import java.io.FileInputStream;
+import java.util.Properties;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,14 +13,80 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ReportsDialog extends javax.swing.JFrame {
 
-    
-    PlayersDialog pd  = new PlayersDialog();
+    PlayersDialog pd = new PlayersDialog();
+    Properties mostrar = new Properties();
     
     public ReportsDialog() {
         initComponents();
         propiedadesTabla();
+        RegistrosTabla();
+    }
+    
+    private void propiedadesTabla(){
+        jTable1.setDefaultRenderer(Object.class, new ImgTable());
+        String titulos[] = {"Name","Vehicle","Estado","Enemigos Destruidos","Veces destruido","Imagen"};
+        pd.dtm = new DefaultTableModel(null,titulos);
+        jTable1.setRowHeight(110);
     }
 
+    
+    private void actualizarTabla(){
+        pd.registros = pd.contenedor.listFiles();
+        pd.dtm.setRowCount(0);
+        RegistrosTabla();
+    }
+    
+    private void RegistrosTabla(){
+        for (int i = 0; i < pd.registros.length; i++) {
+            File URL = new File(pd.ubicacion+pd.registros[i].getName());
+            try {
+                FileInputStream fis = new FileInputStream(URL);
+                mostrar.load(fis);
+               
+                pd.dtm.addRow(new Object[]{pd.registros[i].getName().replace(".dr",""),
+                mostrar.getProperty("Vehicle1"),estado(),mostrar.getProperty("Ataque"),mostrar.getProperty("Defensa"),image1()});
+                
+                pd.dtm.addRow(new Object[]{pd.registros[i].getName().replace(".dr",""),
+                mostrar.getProperty("Vehicle2"),estado(),mostrar.getProperty("Ataque"),mostrar.getProperty("Defensa"),image2()});
+                
+                pd.dtm.addRow(new Object[]{pd.registros[i].getName().replace(".dr",""),
+                mostrar.getProperty("Vehicle3"),estado(),mostrar.getProperty("Ataque"),mostrar.getProperty("Defensa"),image3()});
+                
+             
+            } catch (Exception e) {
+            }
+        jTable1.setModel(pd.dtm);
+        }
+    }
+    
+    private String estado(){
+        if(pd.HP>0)
+            return "activo";
+        else
+            return "Inactivo";
+    }
+    
+    private JLabel image1(){
+            if(mostrar.getProperty("TipoVehiculo1").equals("War Plane"))
+                return new JLabel(new ImageIcon(getClass().getResource("/Imagenes/plane.jpg")));
+            else
+                return new JLabel(new ImageIcon(getClass().getResource("/Imagenes/tank.jpg")));
+    }
+
+    private JLabel image2(){
+            if(mostrar.getProperty("TipoVehiculo2").equals("War Plane"))
+                return new JLabel(new ImageIcon(getClass().getResource("/Imagenes/plane.jpg")));
+            else
+                return new JLabel(new ImageIcon(getClass().getResource("/Imagenes/tank.jpg")));
+    }
+        
+    private JLabel image3(){
+        if(mostrar.getProperty("TipoVehiculo3").equals("War Plane"))
+                return new JLabel(new ImageIcon(getClass().getResource("/Imagenes/plane.jpg")));
+        else
+                return new JLabel(new ImageIcon(getClass().getResource("/Imagenes/tank.jpg")));
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,42 +97,30 @@ public class ReportsDialog extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableVehicles = new javax.swing.JTable();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tableVehicles.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tableVehicles);
+        jScrollPane1.setViewportView(jTable1);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        jMenu4.setText("Order...");
-
-        jMenuItem3.setText("Ascending");
-        jMenu4.add(jMenuItem3);
-
-        jMenuItem4.setText("Descending");
-        jMenu4.add(jMenuItem4);
-
-        jMenuBar1.add(jMenu4);
-
-        setJMenuBar(jMenuBar1);
+        jButton1.setText("Refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,37 +128,34 @@ public class ReportsDialog extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1001, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(273, 273, 273))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(51, 51, 51)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void propiedadesTabla(){
-        tableVehicles.setDefaultRenderer(Object.class, new ImgTable());
-        String titulos[] = {"Nombre","Estado","Enemigos destruidos","Veces que fue destruido","Imagen"};
-        DefaultTableModel dtm = new DefaultTableModel(null,titulos);
-        tableVehicles.setModel(dtm);
-        tableVehicles.setRowHeight(120);
-    }
-    
-    
-    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        actualizarTabla();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JTable tableVehicles;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
