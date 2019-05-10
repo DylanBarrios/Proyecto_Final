@@ -19,10 +19,10 @@ public class PlayersDialog extends javax.swing.JDialog {
     String vehicle4=null;
     String vehicle5=null;
     String vehicle6=null;
-    private List<Players> listaDatos;//lista que se envia como parametro
-    private ObservableList<Players> listaObservableDatos;    //lista observable que busca la tabla
-    private List<Players> lista = new ArrayList<>();//lista extra para guardar los valores
-//    MainWindow vp = new MainWindow();
+    String First,Second;
+    private List<Players> listaDatos;                           //lista que se envia como parametro
+    private ObservableList<Players> listaObservableDatos;       //lista observable que busca la tabla
+    private List<Players> lista = new ArrayList<>();            //lista extra para guardar los valores
     
     /**
      * Creates new form PlayersDialog
@@ -81,8 +81,6 @@ public class PlayersDialog extends javax.swing.JDialog {
         RBT5 = new javax.swing.JRadioButton();
         RBP6 = new javax.swing.JRadioButton();
         RBT6 = new javax.swing.JRadioButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -140,8 +138,6 @@ public class PlayersDialog extends javax.swing.JDialog {
         BTG6.add(RBT6);
         RBT6.setText("War Tank");
 
-        jScrollPane1.setViewportView(jTable1);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -162,39 +158,36 @@ public class PlayersDialog extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RBP1)
+                            .addComponent(RBP2)
+                            .addComponent(RBP3))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RBT1)
+                            .addComponent(RBT2)
+                            .addComponent(RBT3))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(RBP4)
+                        .addGap(39, 39, 39)
+                        .addComponent(RBT4)
+                        .addGap(161, 161, 161))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(61, 61, 61)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(RBP1)
-                                    .addComponent(RBP2)
-                                    .addComponent(RBP3))
-                                .addGap(37, 37, 37)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(RBT1)
-                                    .addComponent(RBT2)
-                                    .addComponent(RBT3))))
+                            .addComponent(RBP5)
+                            .addComponent(RBP6))
+                        .addGap(39, 39, 39)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RBT6)
+                            .addComponent(RBT5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(RBP4)
-                                .addGap(39, 39, 39)
-                                .addComponent(RBT4)
-                                .addGap(161, 161, 161))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(RBP5)
-                                    .addComponent(RBP6))
-                                .addGap(39, 39, 39)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(RBT6)
-                                    .addComponent(RBT5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ButtonPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))))
+                        .addComponent(ButtonPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,43 +233,36 @@ public class PlayersDialog extends javax.swing.JDialog {
                                     .addComponent(RBP6)
                                     .addComponent(RBT6)))
                             .addComponent(ButtonPlay, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 21, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonPlayActionPerformed
-        //        players = new Players[2];
-        //        players[0] = new Players(TextFieldP1.getText());
-        //        players[1] = new Players(TextFieldP2.getText());
         addPlayers();
         addVehicles();
         setVisible(false);
     }//GEN-LAST:event_ButtonPlayActionPerformed
 
     private void addPlayers(){
-        String First = TextFieldP1.getText();//obtiene el texto en el primer jtextfield
-        String Second = TextFieldP2.getText();//obtiene el texto en el segundo jtextfield
-        Players nuevoJugador = new Players(First, Second);//crea un nuevo jugador
-        lista.add(nuevoJugador);//agrega los datos a la lista
-        listaDatos = lista;//ingresa los datos a la lista especial para exportar
-        actualizarLista(listaDatos);//actualiza la tabla
+        First = TextFieldP1.getText();                          //obtiene el texto en el primer jtextfield
+        Second = TextFieldP2.getText();                         //obtiene el texto en el segundo jtextfield
+        Players nuevoJugador = new Players(First, Second);      //crea un nuevo jugador
+        lista.add(nuevoJugador);                                //agrega los datos a la lista
+        listaDatos = lista;                                     //ingresa los datos a la lista especial para exportar
+        actualizarLista(listaDatos);                            //actualiza la tabla
     }
     
     private void addVehicles(){
@@ -341,7 +327,5 @@ public class PlayersDialog extends javax.swing.JDialog {
     public javax.swing.JTextField TextFieldP2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
