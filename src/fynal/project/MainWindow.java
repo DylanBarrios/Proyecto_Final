@@ -68,6 +68,7 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -350,6 +351,9 @@ public class MainWindow extends javax.swing.JFrame {
         jMenuItem9.setText("Load Game");
         jMenu1.add(jMenuItem9);
 
+        jMenuItem10.setText("Save Game");
+        jMenu1.add(jMenuItem10);
+
         jMenuItem3.setText("Clear");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -442,7 +446,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_bttUPActionPerformed
 
     private void ComboPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboPlayer1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_ComboPlayer1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -615,6 +619,7 @@ public class MainWindow extends javax.swing.JFrame {
                 matrixBtt[i][j] = new JButton();
                 matrixBtt[i][j].setSize(100, 100);     
                 matrixBtt[i][j].setLocation(i*110, j*110);
+                
                 if(matrixField[i][j] instanceof Grass)
                 matrixBtt[i][j].setIcon(new ImageIcon("src/Imagenes/Grass.jpg"));
                 else if(matrixField[i][j] instanceof Mountain)
@@ -701,6 +706,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;

@@ -22,10 +22,8 @@ public class PlayersDialog extends javax.swing.JDialog {
     String vehicle4=null;
     String vehicle5=null;
     String vehicle6=null;
+    Vehicles one,two,three,four,five,six;
     String First,Second;
-    private List<Players> listaDatos;                           //lista que se envia como parametro
-    private ObservableList<Players> listaObservableDatos;       //lista observable que busca la tabla
-    private List<Players> lista = new ArrayList<>();            //lista extra para guardar los valores
     int ataqueT = 10;
     int defensaT = 6;
     int punteriaT = 60;
@@ -44,25 +42,10 @@ public class PlayersDialog extends javax.swing.JDialog {
      * Creates new form PlayersDialog
      */
     public PlayersDialog() {
-        listaDatos = new ArrayList<>();
         this.setLocationRelativeTo(null);
-        listaObservableDatos = ObservableCollections.observableList(listaDatos);
         initComponents();
     }
-    
-    public void actualizarLista(List<Players> listadoJugadores) {
-        this.listaObservableDatos.clear();
-        this.listaObservableDatos.addAll(listadoJugadores);
-    }
-    
-    public ObservableList<Players> getListaDatos() {
-        return listaObservableDatos;
-    }
-    
-    public void setListaObservableDatos(ObservableList<Players> listaDatos) {
-        this.listaObservableDatos = listaDatos;
-    }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -286,35 +269,60 @@ public class PlayersDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_ButtonPlayActionPerformed
 
     private void addVehicles(){
-        if(RBP1.isSelected())
+
+        if(RBP1.isSelected()){
          vehicle1 = "War Plane";
-        else if(RBT1.isSelected())
+         one = new Plane(7,3,70); 
+        }
+        else if(RBT1.isSelected()){
          vehicle1 = "War Tank";
+         one = new Tank(10,6,60);  
+        }
         
-        if(RBP2.isSelected())
+        if(RBP2.isSelected()){
          vehicle2 = "War Plane";
-        else if(RBT2.isSelected())
+         two = new Plane(7,3,70); 
+        }
+        else if(RBT2.isSelected()){
          vehicle2 = "War Tank";
+         two = new Tank(10,6,60);  
+        }
         
-        if(RBP3.isSelected())
+        if(RBP3.isSelected()){
          vehicle3 = "War Plane";
-        else if(RBT3.isSelected())
+         three = new Plane(7,3,70); 
+        }
+        else if(RBT3.isSelected()){
          vehicle3 = "War Tank";
+         three = new Tank(10,6,60);  
+        }
         
-        if(RBP4.isSelected())
-         vehicle4 = "War Plane";
-        else if(RBT4.isSelected())
+        if(RBP4.isSelected()){
+         vehicle1 = "War Plane";
+         four = new Plane(7,3,70); 
+        }
+        else if(RBT4.isSelected()){
          vehicle4 = "War Tank";
+         four = new Tank(10,6,60);  
+        }
         
-        if(RBP5.isSelected())
+        if(RBP5.isSelected()){
          vehicle5 = "War Plane";
-        else if(RBT5.isSelected())
+         five = new Plane(7,3,70); 
+        }
+        else if(RBT5.isSelected()){
          vehicle5 = "War Tank";
+         five = new Tank(10,6,60);  
+        }
         
-        if(RBP6.isSelected())
+        if(RBP6.isSelected()){
          vehicle6 = "War Plane";
-        else if(RBT6.isSelected())
+         six = new Plane(7,3,70); 
+        }
+        else if(RBT6.isSelected()){
          vehicle6 = "War Tank";
+         six = new Tank(10,6,60);  
+        }
     }
     
     private void addPlayers(){
@@ -332,19 +340,41 @@ public class PlayersDialog extends javax.swing.JDialog {
                     creaUbicacion.mkdirs();
                     Formatter crea = new Formatter(ubicacion+archivo);
                     //nombre jugador, nombre vehiculo, Ataque, defensa, punteria, HP, pp, nivel, Experiencia, arma
-                    crea.format("%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n", 
+                    crea.format("%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n"
+                            + "%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n", 
                             "Name="+TextFieldP1.getText(),"Vehicle1="+jTextNick1.getText(),
-                            "Vehicle2="+jTextNick2.getText(),"Vehicle3="+jTextNick3.getText(),
-                            "Ataque="+ataqueT,"Defensa="+defensaT,"Punteria="+punteriaT,"HP="+HP,
-                            "PP="+PP,"Nivel="+nivel,"Experiencia="+experiencia,"TipoVehiculo1="+vehicle1,
-                            "TipoVehiculo2="+vehicle2,"TipoVehiculo3="+vehicle3);
-                    
+                            "Ataque="+one.getAttack(),
+                            "Defensa="+one.getDefending(),
+                            "Punteria="+one.getAim(),
+                            "HP="+one.getHP(),
+                            "PP="+one.getPP(),
+                            "Nivel="+one.getLevel(),
+                            "Experiencia="+one.getExperience(),
+                            "Vehicle2="+jTextNick2.getText(),
+                            "Ataque="+two.getAttack(),
+                            "Defensa="+two.getDefending(),
+                            "Punteria="+two.getAim(),
+                            "HP="+two.getHP(),
+                            "PP="+two.getPP(),
+                            "Nivel="+two.getLevel(),
+                            "Experiencia="+two.getExperience(),
+                            "Vehicle3="+jTextNick3.getText(),
+                            "Ataque="+three.getAttack(),
+                            "Defensa="+three.getDefending(),
+                            "Punteria="+three.getAim(),
+                            "HP="+three.getHP(),
+                            "PP="+three.getPP(),
+                            "Nivel="+three.getLevel(),
+                            "Experiencia="+three.getExperience(),
+                            "TipoVehiculo1="+vehicle1,
+                            "TipoVehiculo2="+vehicle2,
+                            "TipoVehiculo3="+vehicle3);
                     crea.close();
                     JOptionPane.showMessageDialog(rootPane, "Todo creado");
             //        jComboBox1.removeAllItems();
                     registros = contenedor.listFiles();
-         //           mostrarCombo();
-          //          actualizarTabla();
+            //        mostrarCombo();
+            //        actualizarTabla();
                     setVisible(false);
                 }
             }catch(Exception e){

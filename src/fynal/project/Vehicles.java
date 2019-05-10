@@ -9,14 +9,21 @@ package fynal.project;
  *
  * @author Usuario
  */
-public class Vehicles {
+public class Vehicles extends TypeField{
+    private int attack;
+    private int defending;
+    private int aim;
     private int HP;
     private int PP;
     private int level;
     private int experience;
     private Armas arma;
-    
-    public Vehicles(){
+
+   
+    public Vehicles(int attack, int defending, int aim){
+        this.attack = attack;
+        this.defending = defending;
+        this.aim = aim;
         this.HP = 50;
         this.PP = 5;
         this.level = 1;
@@ -58,6 +65,30 @@ public class Vehicles {
         return arma;
     }
 
+     public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getDefending() {
+        return defending;
+    }
+
+    public void setDefending(int defending) {
+        this.defending = defending;
+    }
+
+    public int getAim() {
+        return aim;
+    }
+
+    public void setAim(int aim) {
+        this.aim = aim;
+    }
+    
     public void setArma(Armas arma) {
         this.arma = arma;
     }
