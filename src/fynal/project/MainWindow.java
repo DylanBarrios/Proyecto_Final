@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,14 +14,17 @@ import javax.swing.JOptionPane;
 public class MainWindow extends javax.swing.JFrame {
 
     PlayersDialog pd;
+    ReportsDialog rd;
     private Random ale = new Random();
     private TypeField matrixField[][];
     private JButton matrixBtt[][];
     private int x,y,poInitX,poInitY;
     private int diceMov;
+    DefaultTableModel dtm;
     
     public MainWindow() {
         pd = new PlayersDialog();
+        rd = new ReportsDialog();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initComponents();
     }
@@ -500,13 +504,13 @@ public class MainWindow extends javax.swing.JFrame {
         newBattliedfield8();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         clear();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        ReportsDialog reportsVehicle = new ReportsDialog(this, true);
-        reportsVehicle.setVisible(true);
+        rd.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
@@ -667,7 +671,13 @@ public class MainWindow extends javax.swing.JFrame {
         ComboPlayer2.addItem(pd.vehicle4);
         ComboPlayer2.addItem(pd.vehicle5);
         ComboPlayer2.addItem(pd.vehicle6);        
-        
+    }
+    
+    public void propiedadesTabla(){
+        rd.tableVehicles.setDefaultRenderer(Object.class, new ImgTable());
+        String titulos[] = {"Nombre","Estado","Enemigos destruidos","Veces que fue destruido"};
+        dtm = new DefaultTableModel(null,titulos);
+        rd.tableVehicles.setRowHeight(120);
     }
 
 

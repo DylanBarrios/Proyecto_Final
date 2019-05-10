@@ -3,7 +3,10 @@ package fynal.project;
 import java.io.BufferedReader;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 //para poder usar listas observables es necesario importar estas clases sino son exactamentes estas genera error
 import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.observablecollections.ObservableCollections;
@@ -24,6 +27,12 @@ public class PlayersDialog extends javax.swing.JDialog {
     private ObservableList<Players> listaObservableDatos;       //lista observable que busca la tabla
     private List<Players> lista = new ArrayList<>();            //lista extra para guardar los valores
     
+    String barra = File.separator;
+    String ubicacion = System.getProperty("user.dir")+barra+"Registros"+barra;
+    File contenedor = new File(ubicacion);
+    File[] registros = contenedor.listFiles();
+    
+    DefaultTableModel dtm;
     /**
      * Creates new form PlayersDialog
      */
@@ -253,17 +262,9 @@ public class PlayersDialog extends javax.swing.JDialog {
     private void ButtonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonPlayActionPerformed
         addPlayers();
         addVehicles();
-        setVisible(false);
+        
     }//GEN-LAST:event_ButtonPlayActionPerformed
 
-    private void addPlayers(){
-        First = TextFieldP1.getText();                          //obtiene el texto en el primer jtextfield
-        Second = TextFieldP2.getText();                         //obtiene el texto en el segundo jtextfield
-        Players nuevoJugador = new Players(First, Second);      //crea un nuevo jugador
-        lista.add(nuevoJugador);                                //agrega los datos a la lista
-        listaDatos = lista;                                     //ingresa los datos a la lista especial para exportar
-        actualizarLista(listaDatos);                            //actualiza la tabla
-    }
     
     private void addVehicles(){
         if(RBP1.isSelected())
@@ -295,6 +296,35 @@ public class PlayersDialog extends javax.swing.JDialog {
          vehicle6 = "War Plane";
         else if(RBT6.isSelected())
          vehicle6 = "War Tank";
+    }
+    
+    private void addPlayers(){
+        String archivo = TextFieldP1.getText()+".dr";
+        File creaUbicacion = new File(ubicacion);
+        File creaArchivo = new File(ubicacion+archivo);
+        if(TextFieldP1.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "No hay nombre");
+        }
+        else{
+            try{
+                if(creaArchivo.exists())
+                    JOptionPane.showMessageDialog(rootPane, "El registro ya existe");
+                else{
+                    creaUbicacion.mkdirs();
+                    Formatter crea = new Formatter(ubicacion+archivo);
+                    crea.format("%s\r\n", "Nombre="+TextFieldP1.getText());
+                    crea.close();
+                    JOptionPane.showMessageDialog(rootPane, "Todo creado");
+            //        jComboBox1.removeAllItems();
+                    registros = contenedor.listFiles();
+         //           mostrarCombo();
+          //          actualizarTabla();
+                    setVisible(false);
+                }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(rootPane, "No se pudo"+e);
+            }
+        }
     }
     
     private void RBP6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBP6ActionPerformed
