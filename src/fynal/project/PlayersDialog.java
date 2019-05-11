@@ -44,6 +44,12 @@ public class PlayersDialog extends javax.swing.JDialog {
     public PlayersDialog() {
         this.setLocationRelativeTo(null);
         initComponents();
+        BTG1.clearSelection();
+        BTG2.clearSelection();
+        BTG3.clearSelection();
+        BTG4.clearSelection();
+        BTG5.clearSelection();
+        BTG6.clearSelection();   
     }
    
     /**

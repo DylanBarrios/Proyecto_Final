@@ -17,10 +17,12 @@ public class MainWindow extends javax.swing.JFrame {
     ReportsDialog rd;
     private Random ale = new Random();
     private TypeField matrixField[][];
+    private final TypeField matrixPrevious[][] = new TypeField[0][0];
     private JButton matrixBtt[][];
     private int x,y,poInitX,poInitY;
     private int diceMov;
     DefaultTableModel dtm;
+    TypeField posan;
     
     public MainWindow() {
         pd = new PlayersDialog();
@@ -440,9 +442,21 @@ public class MainWindow extends javax.swing.JFrame {
         shot();
         diceWildcardGUI.setText("NOT");
         poInitY-=diceMov;
+        if(poInitY<0){
+            poInitY+=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane,"Out of Matrix");
+        }else{
+            poInitY+=diceMov;
+        //Me imprime donde estaba antes
+        matrixField[poInitX][poInitY] = posan;
+        poInitY-=diceMov;
+        //Me guarda el nuevo campo
+        posan = matrixField[poInitX][poInitY];
+        //Me configura el nuevo lugar
+        matrixField[poInitX][poInitY] = pd.one;
         addPanel();
-        if(poInitY<0)
-            JOptionPane.showMessageDialog(null, "Excede la matriz vuelva a tirar");
+        }
     }//GEN-LAST:event_bttUPActionPerformed
 
     private void ComboPlayer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboPlayer1ActionPerformed
@@ -534,9 +548,21 @@ public class MainWindow extends javax.swing.JFrame {
         shot();
         diceWildcardGUI.setText("NOT");
         poInitX+=diceMov;
-        addPanel();
-        if(poInitY<0)
-            JOptionPane.showMessageDialog(null, "Excede la matriz vuelva a tirar");
+        if(poInitX>3){
+            poInitX-=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane, "Out of Matrix");
+        }else{
+            poInitX-=diceMov;
+            //Me imprime donde estaba antes
+            matrixField[poInitX][poInitY] = posan;
+            poInitX+=diceMov;
+            //Me guarda el nuevo campo
+            posan = matrixField[poInitX][poInitY];
+            //Me configura el nuevo lugar
+            matrixField[poInitX][poInitY] = pd.one;
+            addPanel();
+        }
     }//GEN-LAST:event_bttRightActionPerformed
 
     private void BttLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BttLeftActionPerformed
@@ -545,9 +571,21 @@ public class MainWindow extends javax.swing.JFrame {
         shot();
         diceWildcardGUI.setText("NOT");
         poInitX-=diceMov;
-        addPanel();
-        if(poInitY<0)
-            JOptionPane.showMessageDialog(null, "Excede la matriz vuelva a tirar");
+        if(poInitX<0){
+            poInitX+=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane, "Out of Matrix");
+        }else{
+            poInitX+=diceMov;
+            //Me imprime donde estaba antes
+            matrixField[poInitX][poInitY] = posan;
+            poInitX-=diceMov;
+            //Me guarda el nuevo campo
+            posan = matrixField[poInitX][poInitY];
+            //Me configura el nuevo lugar
+            matrixField[poInitX][poInitY] = pd.one;
+            addPanel();
+        }
     }//GEN-LAST:event_BttLeftActionPerformed
 
     private void bttDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttDownActionPerformed
@@ -556,9 +594,21 @@ public class MainWindow extends javax.swing.JFrame {
         shot();
         diceWildcardGUI.setText("NOT");
         poInitY+=diceMov;
+        if(poInitY>3){
+            poInitY-=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane, "Out of Matrix");
+        }else{
+        poInitY-=diceMov;
+        //Me imprime donde estaba antes
+        matrixField[poInitX][poInitY] = posan;
+        poInitY+=diceMov;
+        //Me guarda el nuevo campo
+        posan = matrixField[poInitX][poInitY];
+        //Me configura el nuevo lugar
+        matrixField[poInitX][poInitY] = pd.one;
         addPanel();
-        if(poInitY<0)
-            JOptionPane.showMessageDialog(null, "Excede la matriz vuelva a tirar");
+        }
     }//GEN-LAST:event_bttDownActionPerformed
 
     private void clear(){
@@ -572,7 +622,6 @@ public class MainWindow extends javax.swing.JFrame {
     
     private void newBattliedfield4() {
         battliedfield(4, 4);
-        
     }
     
     private void newBattliedfield6() {
@@ -610,10 +659,13 @@ public class MainWindow extends javax.swing.JFrame {
      }
       poInitX=0;
       poInitY=3;
+      posan = matrixField[poInitX][poInitY];  
+      matrixField[poInitX][poInitY] = pd.one;
       addPanel();
     }
     
     private void addPanel() {
+        String mensaje = ComboPlayer1.getSelectedItem().toString();
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 matrixBtt[i][j] = new JButton();
@@ -621,26 +673,22 @@ public class MainWindow extends javax.swing.JFrame {
                 matrixBtt[i][j].setLocation(i*110, j*110);
                 
                 if(matrixField[i][j] instanceof Grass)
-                matrixBtt[i][j].setIcon(new ImageIcon("src/Imagenes/Grass.jpg"));
+                    matrixBtt[i][j].setIcon(new ImageIcon("src/Imagenes/Grass.jpg"));
                 else if(matrixField[i][j] instanceof Mountain)
-                matrixBtt[i][j].setIcon(new ImageIcon("src/Imagenes/Mountain.jpg"));
+                    matrixBtt[i][j].setIcon(new ImageIcon("src/Imagenes/Mountain.jpg"));
                 else if(matrixField[i][j] instanceof Lake)
-                matrixBtt[i][j].setIcon(new ImageIcon("src/Imagenes/Lake.jpg"));
+                    matrixBtt[i][j].setIcon(new ImageIcon("src/Imagenes/Lake.jpg"));
+                else if(matrixField[i][j] instanceof Vehicles&&mensaje.equals("War Plane"))
+                    matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
+                else if(matrixField[i][j] instanceof Vehicles&&mensaje.equals("War Tank"))
+                    matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/tank.jpg"));
+                else
+                    matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
+                    
                 matrixBtt[i][j].setVisible(true);
                 PanelBattle.add(matrixBtt[i][j]);
             }
         }
-        setVehicle();
-    }
-    
-    private void setVehicle(){
-        String mensaje = ComboPlayer1.getSelectedItem().toString();
-        if(mensaje.equals("War Plane"))
-                matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
-        else if(mensaje.equals("War Tank"))
-                matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/tank.jpg"));
-        else
-                matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
     }
     
     private void ubication(){
@@ -648,10 +696,6 @@ public class MainWindow extends javax.swing.JFrame {
         valor = (String) ComboPlayer1.getSelectedItem();
         System.out.println(poInitX+", "+poInitY);
         System.out.println(valor);
-        if(valor.equals("War Plane"))
-            matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
-        else if(valor.equals("War Tank"))
-            matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/tanqe.jpg"));
         repaint();
     }
     
