@@ -7,7 +7,9 @@ package fynal.project;
 public class Plane extends Vehicles{
     
     private int speedPlane;
-    
+
+    //Clase para configurar mis aviones y asignar valores para que me sirvan 
+    //durante la batalla
     public Plane(int attack, int defending, int aim,int destroyed,int destroyer){
         super(attack,defending,aim,destroyed,destroyer);
         super.setAttack(7);

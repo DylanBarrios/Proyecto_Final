@@ -5,6 +5,7 @@ package fynal.project;
  * @author Usuario
  */
 public class Vehicles extends TypeField{
+    //Declaracion de varibles globales
     private int attack;
     private int defending;
     private int aim;
@@ -108,6 +109,7 @@ public class Vehicles extends TypeField{
         this.destroyer = destroyer;
     }
 
+    //Metodos para sumar y restar vida al atacar 
     
     public void addHP(int points) {
 		this.HP += points;

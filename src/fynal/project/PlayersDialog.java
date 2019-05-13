@@ -296,6 +296,7 @@ public class PlayersDialog extends javax.swing.JDialog {
         addPlayers();
     }//GEN-LAST:event_ButtonPlayActionPerformed
 
+    //Este metodo es para qeu me agregue los vehiculos al combobox
     private void addVehicles(){
 
         if(RBP1.isSelected()){
@@ -352,6 +353,8 @@ public class PlayersDialog extends javax.swing.JDialog {
          six = new Tank(10,6,60,0,0);  
         }
     }
+    
+    //Metodo que me crea archivos en una carpeta dentro del proyecto
     
     private void addPlayers(){
         String archivo = TextFieldP1.getText()+".dr";

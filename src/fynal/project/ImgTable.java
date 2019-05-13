@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public class ImgTable extends DefaultTableCellRenderer{
 
+    //Este metodo me servira para agregar imagenes a los JTable de mis vehiculos
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {

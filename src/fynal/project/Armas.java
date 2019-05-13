@@ -11,6 +11,7 @@ package fynal.project;
  */
 class Armas {
  
+    //Metodo para asignar armas a los vehiculos mientras esten en batallas
     String name;
     int ammunition;
     int HP;

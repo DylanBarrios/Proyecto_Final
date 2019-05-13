@@ -1,7 +1,5 @@
 package fynal.project;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -34,7 +32,7 @@ public class MainWindow extends javax.swing.JFrame {
         bttAddVehicles.setEnabled(false);
     }
 
-    
+    //Metodo qeu me envia el numero del archivo que haya elejido para jugar
     public void sacarTexto(){
         tmp tm = new tmp();
         System.out.println("El valor es "+tm.getTmp());
@@ -505,6 +503,8 @@ public class MainWindow extends javax.swing.JFrame {
         
     }//GEN-LAST:event_ComboPlayer1ActionPerformed
 
+    //Introduzco el numero de archivo sleccionado para cargar juego
+    //a una varibale qeu esta en otra clase
     private void set(){
         tmp tm = new tmp();
         txt2.setText(tm.getTmp());
@@ -714,6 +714,7 @@ public class MainWindow extends javax.swing.JFrame {
         rd.setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    //Me limpia todo lo que tenga en matriz del juego
     public void clear(){
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
@@ -723,6 +724,7 @@ public class MainWindow extends javax.swing.JFrame {
         repaint();
     }
     
+    //Metodos que me serviran para indicar tamaño a mis matrices
     private void newBattliedfield4() {
         battliedfield(4, 4);
     }
@@ -734,6 +736,7 @@ public class MainWindow extends javax.swing.JFrame {
         battliedfield(9, 8);
     }
     
+    //Metodo que resive el tamaño de la matriz que desee
     private void battliedfield(int x, int y){
         this.x = x;
         this.y = y;
@@ -742,6 +745,8 @@ public class MainWindow extends javax.swing.JFrame {
         createMatrix();
     }
     
+    //Me genera una matriz de instancias qeu me serviran para comparar al momento
+    //de estar jugando
     private void createMatrix(){
         int instances = 0;
         for (int i = 0; i < x; i++) {
@@ -788,6 +793,7 @@ public class MainWindow extends javax.swing.JFrame {
       addPanel();
     }
     
+    //Metodo que me va a poner imagenes dependeindo de la instancia qeu tengan
     private void addPanel() {
         mensaje = ComboPlayer1.getSelectedItem().toString();
         for (int i = 0; i < x; i++) {
@@ -817,20 +823,14 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
-    private void ubication(){
-        String valor; 
-        valor = (String) ComboPlayer1.getSelectedItem();
-        System.out.println(poInitX+", "+poInitY);
-        System.out.println(valor);
-        repaint();
-    }
-    
+    //Me genera el dado para moverme 
     private void movements() {
         diceMov = (int) (Math.random() * 3)+1;
         String textMovs = Integer.toString(diceMov);
         diceMovementsGUI.setText(textMovs);
     }
   
+    //Me genera el dado para la precision al disparar
     private void shot(){
         int diceShot;
         diceShot = (int) (Math.random() * 100) + 1;
@@ -838,6 +838,7 @@ public class MainWindow extends javax.swing.JFrame {
         diceShotGUI.setText(textShot+"%");
     }
     
+    //AGrega los vehiculos al combo box de jugar
     public void addVehicles(){
         ComboPlayer1.addItem(pd.vehicle1);
         ComboPlayer1.addItem(pd.vehicle2);

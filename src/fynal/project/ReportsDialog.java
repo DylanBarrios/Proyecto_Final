@@ -14,9 +14,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ReportsDialog extends javax.swing.JFrame {
 
+    
     PlayersDialog pd = new PlayersDialog();
     Properties mostrar = new Properties();
     public int selected =0;
+    
     
     public ReportsDialog() {
         initComponents();
@@ -24,6 +26,7 @@ public class ReportsDialog extends javax.swing.JFrame {
         RegistrosTabla();
     }
     
+    //Agrego los titulos de la tabla
     private void propiedadesTabla(){
         jTable1.setDefaultRenderer(Object.class, new ImgTable());
         String titulos[] = {"Name","Vehicle","State","destroyed enemies","Times it was destroyed","Image"};
@@ -32,11 +35,15 @@ public class ReportsDialog extends javax.swing.JFrame {
     }
 
     
+    //Agrego los nuevos jugadores que se hayan registrado 
     private void actualizarTabla(){
         pd.registros = pd.contenedor.listFiles();
         pd.dtm.setRowCount(0);
         RegistrosTabla();
     }
+    
+    //Este metodo me cargara todos los datos qeu encuentre en la carpeta y me mostrara 
+    //los atributos que yo quiera
     
     private void RegistrosTabla(){
         for (int i = 0; i < pd.registros.length; i++) {
@@ -59,12 +66,16 @@ public class ReportsDialog extends javax.swing.JFrame {
         }
     }
     
+    //Metodo que me ayudara a saber si mi vehiculo aun tiene vida para seguir jugando
     private String estado(){
         if(pd.HP>0)
             return "activo";
         else
             return "Inactivo";
     }
+    
+    //Estos metodos me imprimen la imagen en la JTable leyendo que tipo
+    //de vehiculo es el que tengo 
     
     private JLabel image1(){
             if(mostrar.getProperty("TipoVehiculo1").equals("War Plane"))

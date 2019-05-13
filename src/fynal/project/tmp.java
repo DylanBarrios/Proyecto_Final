@@ -10,6 +10,8 @@ public static String tmp = "";
 
     /**
      * @return the tmp
+     * Metodo que me servira para guardar variables y generar el juego que 
+     *haya guardado
      */
     public static String getTmp() {
         return tmp;
