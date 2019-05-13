@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,6 +16,7 @@ public class ReportsDialog extends javax.swing.JFrame {
 
     PlayersDialog pd = new PlayersDialog();
     Properties mostrar = new Properties();
+    public int selected =0;
     
     public ReportsDialog() {
         initComponents();
@@ -24,7 +26,7 @@ public class ReportsDialog extends javax.swing.JFrame {
     
     private void propiedadesTabla(){
         jTable1.setDefaultRenderer(Object.class, new ImgTable());
-        String titulos[] = {"Name","Vehicle","Estado","Enemigos Destruidos","Veces destruido","Imagen"};
+        String titulos[] = {"Name","Vehicle","State","destroyed enemies","Times it was destroyed","Image"};
         pd.dtm = new DefaultTableModel(null,titulos);
         jTable1.setRowHeight(110);
     }
@@ -44,13 +46,13 @@ public class ReportsDialog extends javax.swing.JFrame {
                 mostrar.load(fis);
                
                 pd.dtm.addRow(new Object[]{pd.registros[i].getName().replace(".dr",""),
-                mostrar.getProperty("Vehicle1"),estado(),mostrar.getProperty("Ataque"),mostrar.getProperty("Defensa"),image1()});
+                mostrar.getProperty("Vehicle1"),estado(),mostrar.getProperty("destroyedEnemies"),mostrar.getProperty("destroyer"),image1()});
                 
                 pd.dtm.addRow(new Object[]{pd.registros[i].getName().replace(".dr",""),
-                mostrar.getProperty("Vehicle2"),estado(),mostrar.getProperty("Ataque"),mostrar.getProperty("Defensa"),image2()});
+                mostrar.getProperty("Vehicle2"),estado(),mostrar.getProperty("destroyedEnemies"),mostrar.getProperty("destroyer"),image2()});
                 
                 pd.dtm.addRow(new Object[]{pd.registros[i].getName().replace(".dr",""),
-                mostrar.getProperty("Vehicle3"),estado(),mostrar.getProperty("Ataque"),mostrar.getProperty("Defensa"),image3()});
+                mostrar.getProperty("Vehicle3"),estado(),mostrar.getProperty("destroyedEnemies"),mostrar.getProperty("destroyer"),image3()});
             } catch (Exception e) {
             }
         jTable1.setModel(pd.dtm);
@@ -99,6 +101,7 @@ public class ReportsDialog extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        txt_ = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -111,25 +114,36 @@ public class ReportsDialog extends javax.swing.JFrame {
 
         jMenuItem4.setText("jMenuItem4");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Refresh");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        txt_.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txt_CaretUpdate(evt);
             }
         });
 
@@ -169,16 +183,19 @@ public class ReportsDialog extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1001, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txt_, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(txt_, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -193,6 +210,46 @@ public class ReportsDialog extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        MainWindow mw = new MainWindow();
+        selected = jTable1.rowAtPoint(evt.getPoint());
+        int question = JOptionPane.showConfirmDialog(rootPane, "Do you want to play with "+String.valueOf(jTable1.getValueAt(selected,0))+"?");
+        if(question == JOptionPane.YES_OPTION){
+            
+            File URL = new File(pd.ubicacion+pd.registros[selected/selected].getName());
+            try {
+                
+                FileInputStream fis = new FileInputStream(URL);
+                mostrar.load(fis);
+                
+                pd.vehicle1 = mostrar.getProperty("TipoVehiculo1");
+                System.out.println("Ella tiene"+pd.vehicle1);
+                pd.vehicle2 = mostrar.getProperty("TipoVehiculo2");                
+                System.out.println("Ella tiene"+pd.vehicle2);
+                pd.vehicle3 = mostrar.getProperty("TipoVehiculo3");
+                System.out.println("Ella tiene"+pd.vehicle3);
+            }
+            catch(Exception e){System.out.println("Fallo"+e);}
+            tmp tm = new tmp();
+            String convert = Integer.toString(selected);
+            txt_.setText(null);
+            System.out.println(selected);
+            this.setVisible(false);
+            mw.sacarTexto();
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void txt_CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txt_CaretUpdate
+        tmp tm = new tmp();
+        tm.setTmp(txt_.getText());
+       
+    }//GEN-LAST:event_txt_CaretUpdate
+
+    private void sacarTexto(){
+        tmp tm = new tmp();
+        System.out.println("El valor es "+tm.getTmp());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -207,5 +264,7 @@ public class ReportsDialog extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txt_;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -1,9 +1,10 @@
 package fynal.project;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,22 +13,31 @@ import javax.swing.table.DefaultTableModel;
  * @author Usuario
  */
 public class MainWindow extends javax.swing.JFrame {
-
     PlayersDialog pd;
     ReportsDialog rd;
     private Random ale = new Random();
+    ReportsDialog rp = new ReportsDialog();
     private TypeField matrixField[][];
-    private final TypeField matrixPrevious[][] = new TypeField[0][0];
     private JButton matrixBtt[][];
     private int x,y,poInitX,poInitY;
     private int diceMov;
     DefaultTableModel dtm;
     TypeField posan;
+    private String mensaje;
+    public int anterior;
     
     public MainWindow() {
         pd = new PlayersDialog();
         rd = new ReportsDialog();
+        this.setResizable(false);
         initComponents();
+        bttAddVehicles.setEnabled(false);
+    }
+
+    
+    public void sacarTexto(){
+        tmp tm = new tmp();
+        System.out.println("El valor es "+tm.getTmp());
     }
 
     /**
@@ -40,7 +50,6 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         PanelBattle = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         PanelButtons = new javax.swing.JPanel();
         bttUP = new javax.swing.JButton();
         BttLeft = new javax.swing.JButton();
@@ -55,8 +64,11 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        Player1 = new javax.swing.JLabel();
+        Player2 = new javax.swing.JLabel();
+        bttAddVehicles = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        txt2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
@@ -86,26 +98,15 @@ public class MainWindow extends javax.swing.JFrame {
 
         PanelBattle.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setText("Add Vehicles");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout PanelBattleLayout = new javax.swing.GroupLayout(PanelBattle);
         PanelBattle.setLayout(PanelBattleLayout);
         PanelBattleLayout.setHorizontalGroup(
             PanelBattleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBattleLayout.createSequentialGroup()
-                .addGap(0, 918, Short.MAX_VALUE)
-                .addComponent(jButton1))
+            .addGap(0, 1023, Short.MAX_VALUE)
         );
         PanelBattleLayout.setVerticalGroup(
             PanelBattleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelBattleLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1))
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         PanelButtons.setBackground(new java.awt.Color(255, 255, 255));
@@ -148,7 +149,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         ComboPlayer2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose a vehicle" }));
 
-        ComboPlayer1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chosse a Vehicle" }));
+        ComboPlayer1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose a Vehicle" }));
         ComboPlayer1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboPlayer1ActionPerformed(evt);
@@ -182,9 +183,23 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("wildcard");
 
-        jLabel3.setText("Player 1");
+        Player1.setText("Player 1");
 
-        jLabel6.setText("Player 2");
+        Player2.setText("Player 2");
+
+        bttAddVehicles.setBackground(new java.awt.Color(0, 204, 204));
+        bttAddVehicles.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        bttAddVehicles.setForeground(new java.awt.Color(255, 255, 255));
+        bttAddVehicles.setText("Add Vehicles");
+        bttAddVehicles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttAddVehiclesActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Rhombus_34545.png"))); // NOI18N
+
+        txt2.setText("jLabel6");
 
         javax.swing.GroupLayout PanelButtonsLayout = new javax.swing.GroupLayout(PanelButtons);
         PanelButtons.setLayout(PanelButtonsLayout);
@@ -192,91 +207,102 @@ public class MainWindow extends javax.swing.JFrame {
             PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelButtonsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(BttLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(bttRight, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelButtonsLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
                 .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelButtonsLayout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(PanelButtonsLayout.createSequentialGroup()
-                        .addComponent(diceShotGUI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(27, 27, 27))
-                    .addComponent(diceWildcardGUI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelButtonsLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelButtonsLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addComponent(Player1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Player2)
+                        .addGap(124, 124, 124))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelButtonsLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelButtonsLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(bttAddVehicles))
+                            .addComponent(diceWildcardGUI, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(79, 79, 79))
+                    .addGroup(PanelButtonsLayout.createSequentialGroup()
+                        .addComponent(txt2)
+                        .addGap(17, 17, 17)
+                        .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelButtonsLayout.createSequentialGroup()
+                                .addComponent(ComboPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ComboPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(PanelButtonsLayout.createSequentialGroup()
+                                .addGap(94, 94, 94)
+                                .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(PanelButtonsLayout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(bttUP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelButtonsLayout.createSequentialGroup()
+                        .addGap(0, 33, Short.MAX_VALUE)
                         .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelButtonsLayout.createSequentialGroup()
-                                .addComponent(bttDown, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(59, 59, 59))
+                                .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(diceMovementsGUI, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(diceShotGUI, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(86, 86, 86))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelButtonsLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(105, 105, 105))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelButtonsLayout.createSequentialGroup()
                                 .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(diceMovementsGUI, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(27, 27, 27))))))
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(PanelButtonsLayout.createSequentialGroup()
+                                        .addComponent(BttLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(bttRight, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(54, 54, 54))))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelButtonsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelButtonsLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bttUP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(58, 58, 58))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelButtonsLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ComboPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-            .addGroup(PanelButtonsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ComboPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bttDown, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(145, 145, 145))
         );
         PanelButtonsLayout.setVerticalGroup(
             PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelButtonsLayout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bttUP, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BttLeft, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(bttRight, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bttUP, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(bttDown, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(BttLeft)
+                    .addComponent(bttRight)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bttDown, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
                 .addComponent(diceMovementsGUI, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(diceShotGUI, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(diceWildcardGUI, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bttAddVehicles)
+                .addGap(17, 17, 17)
+                .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Player1)
+                    .addComponent(Player2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ComboPlayer1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(32, 32, 32)
-                .addGroup(PanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ComboPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addContainerGap())
+                    .addComponent(ComboPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
         );
 
         jMenu1.setText("BattleField");
@@ -351,6 +377,11 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu1.add(jMenu7);
 
         jMenuItem9.setText("Load Game");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem9);
 
         jMenuItem10.setText("Save Game");
@@ -419,24 +450,25 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(PanelBattle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PanelButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PanelBattle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PanelButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(PanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, 947, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PanelBattle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bttUPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttUPActionPerformed
+        mensaje = ComboPlayer1.getSelectedItem().toString();
         clear();
         movements();
         shot();
@@ -446,16 +478,26 @@ public class MainWindow extends javax.swing.JFrame {
             poInitY+=diceMov;
             addPanel();
             JOptionPane.showMessageDialog(rootPane,"Out of Matrix");
+        }
+        else if( mensaje.equals("War Tank")&&(matrixField[poInitX][poInitY] instanceof Lake || matrixField[poInitX][poInitY] instanceof Enemies)){
+            poInitY+=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane, "A tank can not be on the water or on an enemy");
+        }
+        else if( mensaje.equals("War Plane")&&(matrixField[poInitX][poInitY] instanceof Mountain || matrixField[poInitX][poInitY] instanceof Enemies)){
+            poInitY+=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane, "A Plane can not be on the Mountains or on an enemy");
         }else{
             poInitY+=diceMov;
-        //Me imprime donde estaba antes
-        matrixField[poInitX][poInitY] = posan;
-        poInitY-=diceMov;
-        //Me guarda el nuevo campo
-        posan = matrixField[poInitX][poInitY];
-        //Me configura el nuevo lugar
-        matrixField[poInitX][poInitY] = pd.one;
-        addPanel();
+            //Me imprime donde estaba antes
+            matrixField[poInitX][poInitY] = posan;
+            poInitY-=diceMov;
+            //Me guarda el nuevo campo
+            posan = matrixField[poInitX][poInitY];
+            //Me configura el nuevo lugar
+            matrixField[poInitX][poInitY] = pd.one;
+            addPanel();
         }
     }//GEN-LAST:event_bttUPActionPerformed
 
@@ -463,6 +505,10 @@ public class MainWindow extends javax.swing.JFrame {
         
     }//GEN-LAST:event_ComboPlayer1ActionPerformed
 
+    private void set(){
+        tmp tm = new tmp();
+        txt2.setText(tm.getTmp());
+    }
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         pd.TextFieldP2.setEnabled(false);
         pd.TextFieldP1.setText(null);
@@ -470,6 +516,9 @@ public class MainWindow extends javax.swing.JFrame {
         clear();
         pd.setVisible(true);
         newBattliedfield4();
+        bttAddVehicles.setEnabled(true);
+        ComboPlayer1.removeAllItems();
+        ComboPlayer1.addItem("Choose a Vehicle");
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -479,6 +528,9 @@ public class MainWindow extends javax.swing.JFrame {
         clear();
         pd.setVisible(true);
         newBattliedfield4();
+        bttAddVehicles.setEnabled(true);
+        ComboPlayer1.removeAllItems();
+        ComboPlayer1.addItem("Choose a Vehicle");
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
@@ -492,6 +544,9 @@ public class MainWindow extends javax.swing.JFrame {
         clear();
         pd.setVisible(true);
         newBattliedfield6();
+        bttAddVehicles.setEnabled(true);
+        ComboPlayer1.removeAllItems();
+        ComboPlayer1.addItem("Choose a Vehicle");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -501,6 +556,9 @@ public class MainWindow extends javax.swing.JFrame {
         clear();
         pd.setVisible(true);
         newBattliedfield6();
+        bttAddVehicles.setEnabled(true);
+        ComboPlayer1.removeAllItems();
+        ComboPlayer1.addItem("Choose a Vehicle");
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -510,6 +568,9 @@ public class MainWindow extends javax.swing.JFrame {
         clear();
         pd.setVisible(true);
         newBattliedfield8();
+        bttAddVehicles.setEnabled(true);
+        ComboPlayer1.removeAllItems();
+        ComboPlayer1.addItem("Choose a Vehicle");
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
@@ -519,6 +580,9 @@ public class MainWindow extends javax.swing.JFrame {
         clear();
         pd.setVisible(true);
         newBattliedfield8();
+        bttAddVehicles.setEnabled(true);
+        ComboPlayer1.removeAllItems();
+        ComboPlayer1.addItem("Choose a Vehicle");
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     
@@ -538,20 +602,32 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bttAddVehiclesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttAddVehiclesActionPerformed
         addVehicles();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        bttAddVehicles.setEnabled(false);
+    }//GEN-LAST:event_bttAddVehiclesActionPerformed
 
     private void bttRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttRightActionPerformed
+        mensaje = ComboPlayer1.getSelectedItem().toString();
         clear();
         movements();
         shot();
         diceWildcardGUI.setText("NOT");
         poInitX+=diceMov;
-        if(poInitX>3){
+        if(poInitX>(x-1)){
             poInitX-=diceMov;
             addPanel();
             JOptionPane.showMessageDialog(rootPane, "Out of Matrix");
+        }
+        else if( mensaje.equals("War Tank")&&(matrixField[poInitX][poInitY] instanceof Lake || matrixField[poInitX][poInitY] instanceof Enemies)){
+            poInitX-=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane, "A tank can not be on the water or on an enemy");
+        }
+        else if( mensaje.equals("War Plane")&&(matrixField[poInitX][poInitY] instanceof Mountain || matrixField[poInitX][poInitY] instanceof Enemies)){
+            poInitX-=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane, "A Plane can not be on the Mountains or on an enemy");
         }else{
             poInitX-=diceMov;
             //Me imprime donde estaba antes
@@ -566,6 +642,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_bttRightActionPerformed
 
     private void BttLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BttLeftActionPerformed
+        mensaje = ComboPlayer1.getSelectedItem().toString();
         clear();
         movements();
         shot();
@@ -575,6 +652,16 @@ public class MainWindow extends javax.swing.JFrame {
             poInitX+=diceMov;
             addPanel();
             JOptionPane.showMessageDialog(rootPane, "Out of Matrix");
+        }
+        else if( mensaje.equals("War Tank")&&(matrixField[poInitX][poInitY] instanceof Lake || matrixField[poInitX][poInitY] instanceof Enemies)){
+            poInitX+=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane, "A tank can not be on the water or on an enemy");
+        }
+        else if( mensaje.equals("War Plane")&&(matrixField[poInitX][poInitY] instanceof Mountain || matrixField[poInitX][poInitY] instanceof Enemies)){
+            poInitX+=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane, "A Plane can not be on the Mountains or on an enemy");
         }else{
             poInitX+=diceMov;
             //Me imprime donde estaba antes
@@ -589,15 +676,26 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_BttLeftActionPerformed
 
     private void bttDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttDownActionPerformed
+        mensaje = ComboPlayer1.getSelectedItem().toString();
         clear();
         movements();
         shot();
         diceWildcardGUI.setText("NOT");
         poInitY+=diceMov;
-        if(poInitY>3){
+        if(poInitY>(y-1)){
             poInitY-=diceMov;
             addPanel();
             JOptionPane.showMessageDialog(rootPane, "Out of Matrix");
+        }
+        else if( mensaje.equals("War Tank")&&(matrixField[poInitX][poInitY] instanceof Lake || matrixField[poInitX][poInitY] instanceof Enemies)){
+            poInitY-=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane, "A tank can not be on the water or on an enemy");
+        }
+        else if( mensaje.equals("War Plane")&&(matrixField[poInitX][poInitY] instanceof Mountain || matrixField[poInitX][poInitY] instanceof Enemies)){
+            poInitY-=diceMov;
+            addPanel();
+            JOptionPane.showMessageDialog(rootPane, "A Plane can not be on the Mountains or on an enemy");
         }else{
         poInitY-=diceMov;
         //Me imprime donde estaba antes
@@ -611,7 +709,12 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bttDownActionPerformed
 
-    private void clear(){
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        bttAddVehicles.setEnabled(true);
+        rd.setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    public void clear(){
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                PanelBattle.remove(matrixBtt[i][j]);
@@ -642,21 +745,42 @@ public class MainWindow extends javax.swing.JFrame {
     private void createMatrix(){
         int instances = 0;
         for (int i = 0; i < x; i++) {
-        for (int j = 0; j < y; j++) {
-            instances = ale.nextInt(3);
-            switch(instances){
-               case 0:
-                   matrixField[i][j] = new Grass();
-                   break;
-               case 1:
-                   matrixField[i][j] = new Mountain();
-                   break;
-               case 2:
-                   matrixField[i][j] = new Lake();
-                   break;
+            for (int j = 0; j < y; j++) {
+                instances = ale.nextInt(3);
+                switch(instances){
+                    case 0:
+                        matrixField[i][j] = new Grass();
+                    break;
+                    case 1:
+                        matrixField[i][j] = new Mountain();
+                    break;
+                    case 2:
+                        matrixField[i][j] = new Lake();
+                    break;
+                }
             }
         }
-     }
+        
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < 2; j++) {
+                instances = ale.nextInt(5);
+                switch(instances){
+                case 0:
+                   break;
+                case 1:
+                   matrixField[i][j] = new Enemies();
+                   break;
+                case 2:
+                    break;
+                case 3:
+                    matrixField[i][j] = new Enemies();
+                    break;
+                case 4:
+                    break;    
+                }
+            }        
+        }
+      
       poInitX=0;
       poInitY=3;
       posan = matrixField[poInitX][poInitY];  
@@ -665,7 +789,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void addPanel() {
-        String mensaje = ComboPlayer1.getSelectedItem().toString();
+        mensaje = ComboPlayer1.getSelectedItem().toString();
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 matrixBtt[i][j] = new JButton();
@@ -682,6 +806,8 @@ public class MainWindow extends javax.swing.JFrame {
                     matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
                 else if(matrixField[i][j] instanceof Vehicles&&mensaje.equals("War Tank"))
                     matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/tank.jpg"));
+                else if(matrixField[i][j] instanceof Enemies)
+                    matrixBtt[i][j].setIcon(new ImageIcon("src/Imagenes/Enemy.jpg"));
                 else
                     matrixBtt[poInitX][poInitY].setIcon(new ImageIcon("src/Imagenes/plane.jpg"));
                     
@@ -700,7 +826,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void movements() {
-        diceMov = (int) (Math.random() * 4);
+        diceMov = (int) (Math.random() * 3)+1;
         String textMovs = Integer.toString(diceMov);
         diceMovementsGUI.setText(textMovs);
     }
@@ -721,26 +847,48 @@ public class MainWindow extends javax.swing.JFrame {
         ComboPlayer2.addItem(pd.vehicle6);        
     }
 
-
+    public void prueba(){
+      //  tmp t = new tmp();
+      //  System.out.println(t.getTmp());
+       // String tmpo = Integer.toString(t.getTmp());
+      //  System.out.println(tmpo);
+        
+//    File URL = new File(pd.ubicacion+pd.registros[0].getName());
+        //    try {
+                
+        //        FileInputStream fis = new FileInputStream(URL);
+        //        rp.mostrar.load(fis);
+                
+        //        pd.vehicle1 = rp.mostrar.getProperty("TipoVehiculo1");
+        //        System.out.println("Ella tiene"+pd.vehicle1);
+        //        pd.vehicle2 = rp.mostrar.getProperty("TipoVehiculo2");                
+        //        System.out.println("Ella tiene"+pd.vehicle2);
+        //        pd.vehicle3 = rp.mostrar.getProperty("TipoVehiculo3");
+        //        System.out.println("Ella tiene"+pd.vehicle3);
+        //    }
+        //    catch(Exception e){System.out.println("Fallo"+e);}
+            
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BttLeft;
-    public static javax.swing.JComboBox ComboPlayer1;
+    public javax.swing.JComboBox ComboPlayer1;
     public javax.swing.JComboBox ComboPlayer2;
     private javax.swing.JPanel PanelBattle;
     private javax.swing.JPanel PanelButtons;
+    public javax.swing.JLabel Player1;
+    public javax.swing.JLabel Player2;
+    public javax.swing.JButton bttAddVehicles;
     private javax.swing.JButton bttDown;
     private javax.swing.JButton bttRight;
     private javax.swing.JButton bttUP;
     private javax.swing.JLabel diceMovementsGUI;
     private javax.swing.JLabel diceShotGUI;
     private javax.swing.JLabel diceWildcardGUI;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -765,5 +913,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    public javax.swing.JLabel txt2;
     // End of variables declaration//GEN-END:variables
 }

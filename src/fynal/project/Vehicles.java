@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fynal.project;
 
 /**
@@ -13,6 +8,8 @@ public class Vehicles extends TypeField{
     private int attack;
     private int defending;
     private int aim;
+    private int destroyed;
+    private int destroyer;
     private int HP;
     private int PP;
     private int level;
@@ -20,10 +17,12 @@ public class Vehicles extends TypeField{
     private Armas arma;
 
    
-    public Vehicles(int attack, int defending, int aim){
+    public Vehicles(int attack, int defending, int aim, int destroyed, int destroyer){
         this.attack = attack;
         this.defending = defending;
         this.aim = aim;
+        this.destroyed = destroyed;
+        this.destroyer = destroyer;
         this.HP = 50;
         this.PP = 5;
         this.level = 1;
@@ -91,6 +90,22 @@ public class Vehicles extends TypeField{
     
     public void setArma(Armas arma) {
         this.arma = arma;
+    }
+
+    public int getDestroyed() {
+        return destroyed;
+    }
+
+    public void setDestroyed(int destroyed) {
+        this.destroyed = destroyed;
+    }
+
+    public int getDestroyer() {
+        return destroyer;
+    }
+
+    public void setDestroyer(int destroyer) {
+        this.destroyer = destroyer;
     }
 
     
