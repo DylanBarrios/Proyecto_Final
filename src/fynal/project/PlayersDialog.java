@@ -294,6 +294,8 @@ public class PlayersDialog extends javax.swing.JDialog {
     private void ButtonPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonPlayActionPerformed
         addVehicles();
         addPlayers();
+        if(!TextFieldP2.getText().equals(""))
+            addPlayers2();
     }//GEN-LAST:event_ButtonPlayActionPerformed
 
     /**
@@ -421,6 +423,65 @@ public class PlayersDialog extends javax.swing.JDialog {
         }
     }
     
+    private void addPlayers2(){
+        String archivo = TextFieldP2.getText()+".dr";
+        File creaUbicacion = new File(ubicacion);
+        File creaArchivo = new File(ubicacion+archivo);
+        if((TextFieldP1.getText().equals("")&&!TextFieldP2.isEnabled())||(TextFieldP1.getText().equals("")&&TextFieldP2.isEnabled()&&TextFieldP2.getText().equals(""))
+            ||jTextNick1.getText().equals("")||jTextNick3.getText().equals("")||jTextNick2.getText().equals(""))
+            JOptionPane.showMessageDialog(rootPane, "Please fill in all the fields");
+        else{
+            try{
+                if(creaArchivo.exists())
+                    JOptionPane.showMessageDialog(rootPane, "The name already exist, please choose a different name");
+                else{
+                    creaUbicacion.mkdirs();
+                    Formatter crea = new Formatter(ubicacion+archivo);
+                    crea.format("%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n"
+                            + "%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n%s\r\n", 
+                            "Name="+TextFieldP1.getText(),"Vehicle1="+jTextNick1.getText(),
+                            "Ataque="+one.getAttack(),
+                            "Defensa="+one.getDefending(),
+                            "Punteria="+one.getAim(),
+                            "HP="+one.getHP(),
+                            "PP="+one.getPP(),
+                            "Nivel="+one.getLevel(),
+                            "Experiencia="+one.getExperience(),
+                            "destroyedEnemies="+one.getDestroyed(),
+                            "destroyer="+one.getDestroyer(),
+                            "Vehicle2="+jTextNick2.getText(),
+                            "Ataque="+two.getAttack(),
+                            "Defensa="+two.getDefending(),
+                            "Punteria="+two.getAim(),
+                            "HP="+two.getHP(),
+                            "PP="+two.getPP(),
+                            "Nivel="+two.getLevel(),
+                            "Experiencia="+two.getExperience(),
+                            "destroyedEnemies="+two.getDestroyed(),
+                            "destroyer="+two.getDestroyer(),
+                            "Vehicle3="+jTextNick3.getText(),
+                            "Ataque="+three.getAttack(),
+                            "Defensa="+three.getDefending(),
+                            "Punteria="+three.getAim(),
+                            "HP="+three.getHP(),
+                            "PP="+three.getPP(),
+                            "Nivel="+three.getLevel(),
+                            "Experiencia="+three.getExperience(),
+                            "destroyedEnemies="+three.getDestroyed(),
+                            "destroyer="+three.getDestroyer(),
+                            "TipoVehiculo1="+vehicle1,
+                            "TipoVehiculo2="+vehicle2,
+                            "TipoVehiculo3="+vehicle3);
+                    crea.close();
+                    JOptionPane.showMessageDialog(rootPane, "Congratulations, now press Add Vehicle");
+                    registros = contenedor.listFiles();
+                    setVisible(false);
+                }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(rootPane, "You must choose the vehicles");
+            }
+        }
+    }
     private void RBP6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RBP6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_RBP6ActionPerformed

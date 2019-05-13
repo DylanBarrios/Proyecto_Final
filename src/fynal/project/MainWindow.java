@@ -432,9 +432,19 @@ public class MainWindow extends javax.swing.JFrame {
         jMenu8.setText("More Optiones");
 
         jMenuItem15.setText("Shop Store");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuItem15);
 
         jMenuItem16.setText("Create Vehicles");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuItem16);
 
         jMenuItem17.setText("Create Weapons");
@@ -717,6 +727,16 @@ public class MainWindow extends javax.swing.JFrame {
         bttAddVehicles.setEnabled(true);
         rd.setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        ShopStore_ ss = new ShopStore_();
+        ss.setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        CreateVehicles cv = new CreateVehicles();
+        cv.setVisible(true);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     /**
      *Me limpia todo lo que tenga en matriz del juego 
