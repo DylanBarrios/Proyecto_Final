@@ -11,7 +11,17 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public class ImgTable extends DefaultTableCellRenderer{
 
-    //Este metodo me servira para agregar imagenes a los JTable de mis vehiculos
+    /**
+     * getTableCellRendererComponent
+     * Este metodo me servira para agregar imagenes a los JTable de mis vehiculos
+     * @param table
+     * @param value
+     * @param isSelected
+     * @param hasFocus
+     * @param row
+     * @param column
+     * @return 
+     */
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {

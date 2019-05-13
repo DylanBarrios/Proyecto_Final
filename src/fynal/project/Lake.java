@@ -3,7 +3,7 @@ package fynal.project;
 
 /**
  *
- * @author Usuario
+ * @author Dylan
  */
 public class Lake extends TypeField{
    

@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Usuario
+ * @author Dylan
  */
 public class PlayersDialog extends javax.swing.JDialog {
     String vehicle1 =null;
@@ -296,7 +296,10 @@ public class PlayersDialog extends javax.swing.JDialog {
         addPlayers();
     }//GEN-LAST:event_ButtonPlayActionPerformed
 
-    //Este metodo es para qeu me agregue los vehiculos al combobox
+    /**
+     * addVehicles
+     *Este metodo es para qeu me agregue los vehiculos al combobox 
+     */
     private void addVehicles(){
 
         if(RBP1.isSelected()){
@@ -354,8 +357,10 @@ public class PlayersDialog extends javax.swing.JDialog {
         }
     }
     
-    //Metodo que me crea archivos en una carpeta dentro del proyecto
     
+    /**
+     *Metodo que me crea archivos en una carpeta dentro del proyecto 
+     */
     private void addPlayers(){
         String archivo = TextFieldP1.getText()+".dr";
         File creaUbicacion = new File(ubicacion);

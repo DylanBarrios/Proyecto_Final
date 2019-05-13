@@ -8,10 +8,17 @@ import java.time.LocalDateTime;
  */
 public class ResultsBattles{
 
-    //Crear instancias para saber quien gano y quien perdio
+    /**
+     *Crear instancias para saber quien gano y quien perdio 
+     */
     private Armas winner;
     private Armas loser;
     
+    /**
+     * RsultsBattles
+     * @param firstPlayer
+     * @param secondPlayer 
+     */
     public ResultsBattles(Armas firstPlayer, Armas secondPlayer) {
 		if (firstPlayer.getHP() > secondPlayer.getHP()) {
 			this.winner = firstPlayer;

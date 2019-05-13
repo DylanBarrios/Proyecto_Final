@@ -8,8 +8,15 @@ public class Plane extends Vehicles{
     
     private int speedPlane;
 
-    //Clase para configurar mis aviones y asignar valores para que me sirvan 
-    //durante la batalla
+    /**
+     * Clase para configurar mis aviones y asignar valores para que me sirvan 
+     * durante la batalla
+     * @param attack
+     * @param defending
+     * @param aim
+     * @param destroyed
+     * @param destroyer 
+     */
     public Plane(int attack, int defending, int aim,int destroyed,int destroyer){
         super(attack,defending,aim,destroyed,destroyer);
         super.setAttack(7);
